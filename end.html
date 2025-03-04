@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+      <title>Goodbye | JA</title>
+      <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+</head>
+<script>
+   const firebaseConfig = {
+  apiKey: "AIzaSyA5w-HTh1kbuOywI1M4bviLWskbro3egNw",
+  authDomain: "ja-chat-c0d8b.firebaseapp.com",
+  databaseURL: "https://ja-chat-c0d8b-default-rtdb.firebaseio.com",
+  projectId: "ja-chat-c0d8b",
+  storageBucket: "ja-chat-c0d8b.appspot.com",
+  messagingSenderId: "79690163887",
+  appId: "1:79690163887:web:04960546a911e0286b565a",
+  measurementId: "G-0JT6YDEXW9"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const presenceRef = firebase.database().ref("presence/gb");
+const historyRef = firebase.database().ref("history/gb");
+
+let startTime = performance.now();
+
+// Detect device type
+function getDeviceType() {
+  const userAgent = navigator.userAgent.toLowerCase();
+  if (/mobile|android|iphone|ipad|ipod/.test(userAgent)) {
+    return "Mobile";
+  } else {
+    return "Laptop/Desktop";
+  }
+}
+
+const deviceType = getDeviceType();
+
+function setOnlineStatus() {
+  const timestamp = new Date().toISOString();
+  presenceRef.set({
+    status: "online",
+    device: deviceType,
+    timestamp: timestamp
+  });
+
+  historyRef.push({
+    event: "online",
+    device: deviceType,
+    timestamp: timestamp
+  });
+}
+
+function setOfflineStatus() {
+  const timestamp = new Date().toISOString();
+
+  // Calculate time spent
+  const endTime = performance.now();
+  const timeSpentMs = endTime - startTime;
+  const timeSpentSec = Math.floor(timeSpentMs / 1000);
+
+  presenceRef.set({
+    status: "last seen at " + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }),
+    timeSpent: timeSpentSec + " seconds",
+    device: deviceType,
+    timestamp: timestamp
+  });
+
+  historyRef.push({
+    event: "offline",
+    device: deviceType,
+    timeSpent: timeSpentSec + " seconds",
+    timestamp: timestamp
+  });
+}
+
+setOnlineStatus();
+
+document.addEventListener("visibilitychange", function () {
+  if (document.visibilityState === "hidden") {
+    setOfflineStatus();
+  } else {
+    startTime = performance.now();
+    setOnlineStatus();
+  }
+});
+
+
+</script>
+<style>
+      * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+      }
+      .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      background-color: #353535b6; 
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+      z-index: 1000;
+      color: #333333;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      transition: transform 0.3s ease-in-out;
+}
+.navbar img {
+      width: 130px;
+}
+.menu {
+      display: flex;
+      gap: 20px;
+}
+.menu a {
+      color: #ff0000;
+      text-decoration: none;
+      font-size: 15px;
+}
+
+      body, html {
+          height: 100%;
+          font-family: "Zilla Slab", serif;
+      }
+
+      .video-background {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          filter: blur(8px) brightness(30%);
+          transform: scale(1.05);
+          z-index: -1;
+      }
+
+      .content {
+          z-index: 1;
+          color: #fff;
+          margin: 100px 40px;
+          display: none; /* Initially hidden */
+      }
+       
+      p {
+        font-size: 25px;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+      }
+      #showButton {
+        margin: 100px 30px;
+        padding: 10px;
+        font-size: 20px;
+        color: #fff;
+        background-color: #333333;
+        border-radius: 29px;
+        border-color: transparent;
+
+      }
+</style>
+<body>
+    <header>
+        <nav class="navbar" id="navbar">
+            <a href="index.html">
+                <img src="logo.png" alt="Twelve">
+            </a>
+            <div class="menu">
+                <a href="index.html">Goodbye - The Last Website</a>
+            </div>
+        </nav>
+    </header>
+      <video class="video-background" autoplay loop muted>
+            <source src="https://videos.pexels.com/video-files/2018959/2018959-hd_1920_1080_30fps.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    
+        <div class="content" id="content">
+            <p> <b>You may reduce your device volume if you can't concentrate reading with a music.</b> <br><br> An end doesn’t feel so real to me. Maybe because we’ve broken up before, and we always came back, knowing how much we loved each other. But this time, it feels different. This time, it feels real. I know you'd still come to this website even though you know it's deleted. <br><br>
+        
+                I realize now, I’m the one who made things this way. And I never ended things with a Goodbye message. It’s not on you, it’s on me. I let it all get to a point where I couldn’t give us the relationship we both deserved. Our first kiss, March 7th last year, we were kissing and cuddling, deep down, did we ever know that we’d end up like this? Kissing, not knowing we’d be walkin' away from each other like strangers one day. Maybe we did. Maybe we felt it in the silence, knowing that even in that closeness, we couldn’t avoid what was coming.<br><br>
+        
+                I let frustration and confusion cloud the love we shared. I didn’t handle things the way I should have, and because of that, I failed to give you the love, care, and respect that you truly deserved. I’m sorry. You deserved so much better than what I could give. My own insecurities, my fears, and my failure to deal with things got in the way of us. I can see how hard I made it for you, and for that, I truly regret it.<br><br>
+        
+                I gave so much of myself in this relationship, didn’t I? Websites, gifts, time, effort, words, risks. I believed that if I gave enough, it would be enough, that we'd make it through. But deep down, I was never fully happy. I kept pushing, giving, trying to prove how much you meant to me, even when it felt like you weren’t seeing it. I thought if I gave you everything, if I showed you all the love I had, it would be enough. But it wasn’t. It was never enough, and it wasn’t because of you.... it was me.<br><br>
+        
+                You were always "special" to me, and I always found you special, no matter what. But the constant criticism, the teasing, the feeling like I could never be good enough... I couldn’t keep pretending that everything was fine when it wasn’t. I can’t keep pretending that I didn’t feel the weight of those moments.<br><br>
+        
+                I know you’ve seen many couple videos on the internet, or maybe seen how Fareeha’s boyfriend is, or how your other friends’ boyfriends treat them. And you wanted me to be like that. I know you had good impressions on Rathin, as he jokes and I don't. I know Steve sings better, but I don't. Someone who's always clouded with fear and insecurities, someone who couldn't make you feel like you’re the most important thing in the world, I couldn’t be that for you. I’m sorry. I don’t have that ability. I’m not perfect, and I can never be like those perfect boyfriends you see. But I tried to give everything I had. I just wasn’t enough to meet your expectations, and I didn’t know how to handle it.<br><br>
+        
+                Still, I held on... Because I believed you could see all the effort, all the love I have for you, and one day you’d appreciate it. I truly believed that. But now, I realize it wasn’t just about us being “perfect”........... <br>it was about me trying to fix things that weren’t meant to be fixed. I regret that I didn’t realize it sooner. I wish we knew things when we were blindly kissing each other, thinking that everything would work out.<br><br>
+        
+                You did everything you could. I couldn’t keep up. My insecurities and fears were always in the way. And I’m sorry for that. But if I’m being honest, I still hope that maybe one day, when we’ve healed and figured things out, we’ll look back at this and realize that maybe we were just too broken to see how much we could’ve been. I’ll always look back at us and wonder what could have been.
+                <br>
+                I hope you find the peace and happiness you deserve, with or without me. Maybe this is how it’s meant to be. We both need time to heal, and maybe this is the only way forward. Where, 'JK website' became 'JA website', and now comes to an end. <b>23rd Octber 2023</b> to <b>24th February 2025</b> <br><br>
+                Goodbye, <br>
+                Aravind
+                <br> <br>
+        </div>
+
+        <button id="showButton" onclick="playMusicAndShowContent()">Show</button>
+        <audio id="backgroundMusic" loop>
+          <source src="arayam.mp3" type="audio/mp3">
+          Your browser does not support the audio tag.
+        </audio>
+
+        <script>
+            function playMusicAndShowContent() {
+                const audio = document.getElementById('backgroundMusic');
+                const button = document.getElementById('showButton');
+                const content = document.getElementById('content');
+                audio.volume = 0.5; // Set the volume to 50%
+                audio.play(); // Play the music
+                button.style.display = 'none'; // Hide the "show" button
+                content.style.display = 'block'; // Show the content
+            }
+        </script>
+</body>
+</html>
