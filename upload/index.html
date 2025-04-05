@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./index.css">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <title>Upload your IMAGE</title>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"></script>
+</head>
+
+<body> 
+  
+    <div class="imageUpload">
+        <input type="file" class="inp" onchange="getImageData(event)" />
+        <button onclick="selectImage()" class="selectImage">Select Image</button>
+        <span class="filedata"></span>
+        <div class="progressBar">
+          <div class="progress"></div>
+        </div>
+        <button onclick="uploadImage()" class="upload">Upload</button>
+        <span class="loading">Loading...</span>
+        <h1 style="color: aliceblue;">Click on image to copy link</h1>
+        <img class="img" id="myImage" onclick="copyImageLink()" />
+      </div>
+      <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyA5w-HTh1kbuOywI1M4bviLWskbro3egNw",
+        authDomain: "ja-chat-c0d8b.firebaseapp.com",
+        databaseURL: "https://ja-chat-c0d8b-default-rtdb.firebaseio.com",
+        projectId: "ja-chat-c0d8b",
+        storageBucket: "ja-chat-c0d8b.appspot.com",
+        messagingSenderId: "79690163887",
+        appId: "1:79690163887:web:04960546a911e0286b565a",
+        measurementId: "G-0JT6YDEXW9"
+        };
+  
+        const app = firebase.initializeApp(firebaseConfig);
+  
+        const storage = firebase.storage();
+  
+        const inp = document.querySelector(".inp");
+        const progressbar = document.querySelector(".progress");
+        const img = document.querySelector(".img");
+        const fileData = document.querySelector(".filedata");
+        const loading = document.querySelector(".loading");
+        let file;
+        let fileName;
+        let progress;
+        let isLoading = false;
+        let uploadedFileName;
+        const selectImage = () => {
+          inp.click();
+        };
+        const getImageData = (e) => {
+          file = e.target.files[0];
+          fileName = Math.round(Math.random() * 9999) + file.name;
+          if (fileName) {
+            fileData.style.display = "block";
+          }
+          fileData.innerHTML = fileName;
+          console.log(file, fileName);
+        };
+  
+        const uploadImage = () => {
+          loading.style.display = "block";
+          const storageRef = storage.ref().child("myimages");
+          const folderRef = storageRef.child(fileName);
+          const uploadtask = folderRef.put(file);
+          uploadtask.on(
+            "state_changed",
+            (snapshot) => {
+              console.log("Snapshot", snapshot.ref.name);
+              progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              progress = Math.round(progress);
+              progressbar.style.width = progress + "%";
+              progressbar.innerHTML = progress + "%";
+              uploadedFileName = snapshot.ref.name;
+            },
+            (error) => {
+              console.log(error);
+            },
+            () => {
+              storage
+                .ref("myimages")
+                .child(uploadedFileName)
+                .getDownloadURL()
+                .then((url) => {
+                  console.log("URL", url);
+                  if (!url) {
+                    img.style.display = "none";
+                  } else {
+                    img.style.display = "block";
+                    loading.style.display = "none";
+                  }
+                  img.setAttribute("src", url);
+                });
+              console.log("File Uploaded Successfully");
+            }
+          );
+        };
+      </script>
+      <script>
+         // This function gets triggered when the image is clicked to copy its link
+    function copyImageLink() {
+        // Get the image element by its ID
+        var image = document.getElementById("myImage");
+
+        // Check if the image source exists
+        if (image && image.src) {
+            // Create a temporary input element
+            var tempInput = document.createElement("input");
+
+            // Set the value of the input to the image URL
+            tempInput.value = image.src;
+
+            // Append the input to the body (it won't be visible)
+            document.body.appendChild(tempInput);
+
+            // Select the input content
+            tempInput.select();
+            tempInput.setSelectionRange(0, 99999); // For mobile devices
+
+            // Execute the "copy" command to copy the text to the clipboard
+            document.execCommand("copy");
+
+            // Remove the temporary input element after copying
+            document.body.removeChild(tempInput);
+
+            // Optionally, alert the user that the link has been copied
+            alert("Image link copied to clipboard!");
+        }
+    }
+
+    // Function to handle image data and display it after selecting a file
+    function getImageData(event) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            const img = document.getElementById("myImage");
+            img.src = e.target.result; // Set the img source to the file
+        };
+
+        if (file) {
+            reader.readAsDataURL(file); // Read the file as a data URL
+        }
+    }
+
+    // Optional function to simulate selecting an image (can be customized)
+    function selectImage() {
+        document.querySelector('.inp').click();
+    }
+
+    // Optional function for image upload (can be customized)
+    function uploadImage() {
+        // Implement the upload logic here
+        console.log("Uploading image...");
+    }
+      </script>
+</body>
+</html>
