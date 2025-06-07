@@ -1,0 +1,46 @@
+
+@media (max-width: 480px) {
+    body {
+        margin: 15px;
+    }
+    .tdlcontainer {
+        margin: 0px;
+        margin-top: 30px;
+        flex-direction: column;
+    }
+    #taskList li button {
+        margin-left: 5px;
+        padding: 0px; 
+    }
+    #wrapper {
+        flex-direction: column;
+    }
+    nav img {
+        width: 90px;
+    }
+    .box2 {
+        width: 38%;
+    }
+    .box3 {
+        width: 33%;
+    }
+    .box4 {
+        width: 65%;
+    }
+    #calendar {
+        margin: 0;
+        margin-top: 50px;
+    }
+    .date-number {
+        font-size: 80px;
+    }
+    .date-month-year {
+        margin: -5px;
+    }
+    textarea {
+        font-size: 15px;
+        border-radius: 10px;
+        border-color: transparent;
+    }
+    
+}

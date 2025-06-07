@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Doto:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <title>JA | Twelve</title>
+</head>
+<body>
+		<a href="index.html">
+            <nav>
+                <img src="../images/LOGO-Light.png" alt="JA | TWELVE">
+            </nav>
+        </a>
+        <h1 style="text-align: center;">Notes</h1>
+        <textarea id="myTextarea" placeholder="Type something..."></textarea>
+
+
+
+        
+<script>
+    // Get the textarea element
+    const textarea = document.getElementById('myTextarea');
+
+// Load any saved text from local storage when the page loads
+window.onload = function() {
+    const savedText = localStorage.getItem('textData');
+    if (savedText) {
+        textarea.value = savedText;
+    }
+};
+
+// Save the text in local storage whenever the content changes
+textarea.addEventListener('input', function() {
+    localStorage.setItem('textData', textarea.value);
+});
+</script>
+<script src="../js/quote.js"></script>
+<script src="../js/calendar.js"></script>
+</body>
+</html>

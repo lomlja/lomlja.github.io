@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Doto:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
+  <title>JA | Twelve</title>
+</head>
+<body>
+
+    <a href="index.html">
+        <nav>
+            <img src="../images/LOGO-Light.png" alt="JA | TWELVE">
+        </nav>
+    </a>
+
+    <h1 style="text-align: center;">To-Do-List</h1>
+    
+    <div class="tdlcontainer">
+        <div class="task-form">
+            <form id="taskForm">
+                <h2>Add New Task</h2>
+                <input type="text" id="taskName" placeholder="Task name" required>
+                <input type="datetime-local" id="dueDate" required>
+                <button type="submit">Add Task</button>
+            </form>
+        </div>
+        
+        <div class="task-list">
+            <h2>Current Tasks</h2>
+            <ul id="taskList"></ul>
+        </div>
+    </div>
+
+
+
+
+
+
+    <script type="module">
+        // Import necessary Firebase modules
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, updateDoc, deleteDoc, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+    
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyChqxgTWlXmwnTBP3CR5tviHhlMM6rKyLc",
+            authDomain: "arava-ee734.firebaseapp.com",
+            projectId: "arava-ee734",
+            storageBucket: "arava-ee734.firebasestorage.app",
+            messagingSenderId: "552012486493",
+            appId: "1:552012486493:web:145f8a9ea51de63e857ab4",
+        };
+    
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+    
+        // Reference to the 'tasks' collection
+        const tasksRef = collection(db, "jaita");
+    
+        // Add Task
+        document.getElementById("taskForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const taskName = document.getElementById("taskName").value;
+            const dueDate = document.getElementById("dueDate").value;
+    
+            try {
+                await addDoc(tasksRef, {
+                    taskName,
+                    dueDate,
+                    completed: false
+                });
+                document.getElementById("taskForm").reset();
+            } catch (error) {
+                console.error("Error adding task: ", error);
+            }
+        });
+    
+        // Display Tasks
+        const taskList = document.getElementById("taskList");
+    
+        function renderTask(doc) {
+            const li = document.createElement("li");
+            li.setAttribute("data-id", doc.id);
+    
+            const task = doc.data();
+            li.innerHTML = `
+                <span class="${task.completed ? 'completed-task' : ''}">
+                    ${task.taskName} <br/>(due: ${task.dueDate})
+                </span>
+                <button onclick="editTask('${doc.id}', '${task.taskName}', '${task.dueDate}')">Edit</button>
+                <button onclick="deleteTask('${doc.id}')">Delete</button>
+                <button onclick="toggleComplete('${doc.id}', ${task.completed})">
+                    ${task.completed ? "Mark as Incomplete" : "Mark as Complete"}
+                </button>
+            `;
+            taskList.appendChild(li);
+        }
+    
+        // Real-time listener
+        onSnapshot(tasksRef, (snapshot) => {
+            taskList.innerHTML = "";
+            snapshot.forEach((doc) => {
+                renderTask(doc);
+            });
+        });
+    
+        // Edit Task
+        window.editTask = async (id, taskName, dueDate) => {
+            const newTaskName = prompt("Edit task name:", taskName);
+            const newDueDate = prompt("Edit due date (YYYY-MM-DDTHH:MM):", dueDate);
+    
+            if (newTaskName && newDueDate) {
+                const taskDoc = doc(db, "jaita", id);
+                await updateDoc(taskDoc, {
+                    taskName: newTaskName,
+                    dueDate: newDueDate
+                });
+            }
+        };
+    
+        // Delete Task
+        window.deleteTask = async (id) => {
+            const taskDoc = doc(db, "jaita", id);
+            await deleteDoc(taskDoc);
+        };
+    
+        // Mark Task as Complete/Incomplete
+        window.toggleComplete = async (id, completed) => {
+            const taskDoc = doc(db, "jaita", id);
+            await updateDoc(taskDoc, {
+                completed: !completed
+            });
+        };
+    </script>
+
+</body>
+</html>
