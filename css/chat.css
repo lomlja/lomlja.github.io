@@ -252,7 +252,6 @@ textarea:focus {
     border-radius: 20px;
     backdrop-filter: blur(20px);
     opacity: 88%;
-    background:#2a2a2a;
     color:#fff;
     max-width: 80%;
     font-size: 16px;
@@ -269,7 +268,7 @@ textarea:focus {
     animation: fadeIn 0.40;
 } 
 .me{
-    background-color: #1f7aed;
+    background-color: #9e7ffb;
     backdrop-filter: blur(20px);
     opacity: 86%;
     color:#fff;
@@ -287,7 +286,7 @@ textarea:focus {
     border-radius: 20px;
     backdrop-filter: blur(20px);
     opacity: 88%;
-    background:#252525;
+    background:#211840;
     color:#fff;
     max-width: 80%;
     font-size: 16px;
@@ -334,7 +333,7 @@ textarea:focus {
 }
 .sendbutton {
     padding: 10px;
-    background-color: #1f7aed;
+    background-color: #9276e5;
     color: white;
     border: none;
     cursor: pointer;
