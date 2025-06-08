@@ -673,6 +673,11 @@ reply {
     -webkit-backdrop-filter: blur(15px);
     z-index: 999;
 }
+body.devtools-active {
+    filter: blur(6px);
+    pointer-events: none;
+    user-select: none;
+  }
 /* Responsive Styles */
 @media (max-width: 768px) {
     .sidebar {

@@ -72,6 +72,7 @@
 
 
 </script>
+<script src="../js/asdfghj.js"></script>
 <script src="../js/quote.js"></script>
 <script src="../js/clock.js"></script>
 <script src="../js/heart.js"></script>
@@ -80,13 +81,19 @@
     updateGreeting("Aravind");
 </script>
 <script>
-  const slides = document.getElementById('slides');
-  const totalSlides = slides.children.length;
-  let index = 0;
+ const slides = document.getElementById('slides');
+const totalSlides = slides.children.length;
 
-  setInterval(() => {
-    index = (index + 1) % totalSlides;
-    slides.style.transform = `translateX(-${index * 100}%)`;
-  }, 5000); // 5 seconds
+// Randomize starting slide index on page load
+let index = Math.floor(Math.random() * totalSlides);
+
+// Immediately show that random slide on page load
+slides.style.transform = `translateX(-${index * 100}%)`;
+
+setInterval(() => {
+  index = (index + 1) % totalSlides;
+  slides.style.transform = `translateX(-${index * 100}%)`;
+}, 5000); // 5 seconds
+
 </script>
 </html>
