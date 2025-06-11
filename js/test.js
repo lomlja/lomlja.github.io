@@ -1,7 +1,7 @@
 const passwordRedirects = {
-  '000111': 'A/asmrdeletechats.html',
-  '160307': 'J/index.html',
-  '281208': 'A/index.html',
+  '000111': 'AuTFQGq0Zc2N9Dh0Cm9p79I6T/asmrdeletechats.html',
+  '160307': 'Jt4r0SJ4N9bFWT0Sa1M5uOiFW/index.html',
+  '281208': 'AuTFQGq0Zc2N9Dh0Cm9p79I6T/index.html',
   'twelve': 'https://twelvesites.github.io',
   'cgpt': 'https://chatgpt.com/'
 };
