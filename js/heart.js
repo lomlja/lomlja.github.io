@@ -17,7 +17,7 @@ window.onload = function() {
           months += 12;
         }
     
-        return `${years} year, ${months} month(s), ${days} day(s)`;
+        return `${years} year, ${months} months, ${days} days`;
       }
       
       const timeElapsedElement = document.getElementById("timeElapsed");
