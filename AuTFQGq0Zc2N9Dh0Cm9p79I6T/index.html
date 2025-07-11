@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Doto:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="../css/home.css">
+      <title>JA | Twelve</title>
+</head>
+      <nav>
+            <img src="../images/LOGO-Light.png" alt="TWELVE">
+      </nav>
+
+      <section id="page">
+        <section id="main">
+              <div class="intro">
+                    <h1 class="animate" id="greeting">Hey Aravind!</h1>
+                    <p id="quote">Loading...</p>
+                    <p id="author"></p>
+              </div>
+              <div class="box">
+                  <div class="button-container">
+                      <a href="chat.html" class="button animate delay-1"><i class="fa-solid fa-message"></i> Chats</a>
+                      <a href="to-do-list.html" class="button animate delay-2"><i class="fa-solid fa-list-check"></i> To-Do-List</a>
+                  </div>
+                  <div class="button-container">
+                      <a href="notes.html" class="button animate delay-4"><i class="fa-solid fa-note-sticky"></i> Notes</a>
+                      <a href="mood.html" class="button animate delay-3"><i class="fa-solid fa-face-grin-wide"></i> Unsaid</a>
+                  </div>
+                  
+              </div>
+              
+        </section>
+  
+        <section id="wrapper" style="display: none;"> 
+              <div class="date-heart">
+                    <div id="date-circle"></div>
+                    
+                    <div class="image-box">
+                          <img src="https://static.vecteezy.com/system/resources/thumbnails/012/658/365/small/heart-shaped-love-icon-symbol-for-pictogram-app-website-logo-or-graphic-design-element-pixel-art-style-illustration-format-png.png" alt="Image" class="image">
+                          <div class="time-elapsed" id="timeElapsed"></div>
+                    </div>
+                    
+              </div>
+              <div id="clock"></div>
+              <div class="slideshow-box">
+                  <div class="slides" id="slides">
+                        <img src="../images/slideshow/1.jpeg" class="slide">
+                        <img src="../images/slideshow/2.jpeg" class="slide">
+                        <img src="../images/slideshow/3.jpeg" class="slide">
+                        <img src="../images/slideshow/4.jpeg" class="slide">
+                        <img src="../images/slideshow/5.jpeg" class="slide">
+                        <img src="../images/slideshow/6.jpeg" class="slide">
+                  </div>
+             </div>
+        </section>
+  </section>
+<script>
+   document.addEventListener("DOMContentLoaded", () => {
+  // Sequence timing for revealing the wrapper
+  const wrapper = document.getElementById("wrapper");
+
+  // Wait until the last animation finishes
+  setTimeout(() => {
+    wrapper.style.display = "block";
+    wrapper.classList.add("show");
+  }, 300); // Matches total animation time of 2.8 seconds
+});
+
+
+</script>
+<script src="../js/asdfghj.js"></script>
+<script src="../js/quote.js"></script>
+<script src="../js/clock.js"></script>
+<script src="../js/heart.js"></script>
+<script src="../js/greetings.js"></script>
+<script>
+    updateGreeting("Aravind");
+</script>
+<script>
+ const slides = document.getElementById('slides');
+const totalSlides = slides.children.length;
+
+// Randomize starting slide index on page load
+let index = Math.floor(Math.random() * totalSlides);
+
+// Immediately show that random slide on page load
+slides.style.transform = `translateX(-${index * 100}%)`;
+
+setInterval(() => {
+  index = (index + 1) % totalSlides;
+  slides.style.transform = `translateX(-${index * 100}%)`;
+}, 5000); // 5 seconds
+
+</script>
+</html>

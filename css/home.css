@@ -1,0 +1,545 @@
+body {
+      background-color: #000000;
+      color: #fff;
+}
+* {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+  }
+nav img {
+      width: 130px;
+      margin-top: 10px;
+      margin-bottom: 30px;
+}
+a {
+    text-decoration: none;
+
+}
+.hidden {
+    display: none;
+}
+#page {
+      margin: 30px;
+      display: flex;
+      flex-wrap: wrap; /* Allow wrapping on smaller screens */
+      justify-content: space-between;
+      gap: 20px;
+  }
+  
+  .intro h1 {
+      font-size: 50px;
+      color: #fff;
+      font-family: "Doto", sans-serif;
+  }
+  
+  #quote, #author {
+      color: #fff;
+      font-family: "Playfair Display", serif;
+  }
+  
+  #quote {
+      margin-top: 15px;
+  }
+  
+  #author {
+      margin-top: 0px;
+  }
+  
+  /* Box Styling */
+  .box {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      max-width: 800px;
+      border: 2px solid #000;
+      padding: 50px;
+      justify-content: space-between;
+      margin-top: 20px;
+  }
+  
+  .button-container {
+      display: flex;
+      justify-content: space-between;
+  }
+  
+ .button {
+    display: inline-flex; /* Ensures proper alignment for icons and text */
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    font-size: 25px;
+    background-color: #ff0303;
+    color: #000000; /* Set text color */
+    font-family: "Doto", sans-serif;
+    font-weight: 900;
+    border: none; /* Remove default anchor styles */
+    border-radius: 20px;
+    width: 55%; /* Adjust for smaller screen widths */
+    margin: 5px;
+    height: 70px;
+    text-decoration: none; /* Remove underline */
+    transition: transform 0.25s, background-color 0.25s;
+}
+
+.button:hover {
+    transform: scale(1.2);
+    background-color: #e60000; /* Slightly darker hover effect */
+}
+
+.button i {
+    margin-right: 10px; /* Space between icon and text */
+}
+
+  #clock {
+      font-family: "Cinzel", serif;
+      font-size: 36px;
+      font-weight: bold;
+      color: #333;
+      text-align: center;
+      padding: 20px;
+      background-color: #f5f5f5;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 400px;
+      margin: 20px auto;
+  }
+  
+  #date-circle {
+      font-family: "Playfair Display", serif;
+      font-size: 60px; /* Scale down font size */
+      font-weight: 600;
+      color: #333;
+      text-align: center;
+      line-height: 130px;
+      width: 150px;
+      height: 150px;
+      background-color: #f5f5f5;
+      border-radius: 50%;
+      margin: 10px auto;
+  }
+  
+  .image-box {
+      position: relative;
+      width: 150px;
+      height: 150px;
+      background-color: #fff;
+      overflow: hidden;
+      border: 2px solid #333;
+      border-radius: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto;
+  }
+  
+  .image-box .image {
+      width: 60%;
+      height: 60%;
+      object-fit: contain;
+  }
+  
+  .image-box:hover .image {
+      opacity: 0;
+  }
+  
+  .time-elapsed {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #ff0ddfb7;
+      font-size: 20px;
+      text-align: center;
+      display: none;
+  }
+  
+  .image-box:hover .time-elapsed {
+      display: block;
+  }
+  
+  .date-heart {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+  }
+ 
+
+  .animate {
+    opacity: 0;
+    transform: translateY(50px);
+    animation: slideup 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* Slide Up Animation with Motion Blur */
+@keyframes slideup {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+    filter: blur(10px); /* Starting with blur */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0); /* No blur at the end */
+  }
+}
+
+  
+  /* Staggered Delay for Buttons */
+  .delay-1 {
+    animation-delay: 0.8s;
+  }
+  
+  .delay-2 {
+    animation-delay: 0.9s;
+  }
+  
+  .delay-3 {
+    animation-delay: 1s;
+  }
+  
+  .delay-4 {
+    animation-delay: 1.1s;
+  }
+  
+  /* Wrapper Fade-In Animation */
+  #wrapper {
+    margin-top: -5%;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    animation-delay: 1.2s; /* Starts right after the last button */
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+/* Button Styles */
+.button-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.button {
+    padding: 15px;
+    font-size: 25px;
+    background-color: #ff0303;
+    font-family: "Doto", sans-serif;
+    font-weight: 900;
+    border: none;
+    border-radius: 20px;
+    width: 55%;
+    height: 70px;
+    transition: transform 0.25s;
+}
+
+.button:hover {
+    transform: scale(1.2);
+}
+
+i {
+    margin-right: 10px;
+}
+.tdlcontainer {
+    display: flex;
+    justify-content: space-around;
+    gap: 30px;
+    font-family: "Playfair Display", serif;
+    margin: 70px;
+}
+
+/* Form styling */
+.task-form {
+    flex: 1;
+    background-color: #1c1c1e;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transform: scale(0.5);
+    animation: scaleUp 1s forwards; /* Scale-up effect */
+}
+
+.task-form h2 {
+    margin-bottom: 15px;
+    font-size: 1.5em;
+}
+
+.task-form input, .task-form button {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 1em;
+    margin-top: 10px;
+    background-color: #2c2c2e;
+    border-color: transparent;
+    color: #fff;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 1s forwards;
+}
+.task-form input:nth-of-type(1) {
+    animation-delay: 0.5s; /* Task Name input appears first */
+}
+
+.task-form input:nth-of-type(2) {
+    animation-delay: 1s; /* Date input appears second */
+}
+.task-form button {
+    background-color: #098bff;
+    color: #ffffff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    animation-delay: 1.5s; /* Add Task button appears last */
+}
+
+.task-form button:hover {
+    background-color: #0368ce;
+}
+
+/* Task list styling */
+.task-list {
+    flex: 2;
+    background-color: #1c1c1e;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    animation: fadeInList 1s forwards;
+    animation-delay: 2s; /* Delay list fade-in */
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.task-list h2 {
+    margin-bottom: 15px;
+    font-family: "Playfair Display", serif;
+    font-size: 1.5em;
+}
+
+#taskList {
+    list-style-type: none;
+}
+/* Scale-up animation */
+@keyframes scaleUp {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Fade-in animation for inputs and button */
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Fade-in animation for task list */
+@keyframes fadeInList {
+    to {
+        opacity: 1;
+    }
+}
+
+#taskList li {
+    background-color: #2c2c2e;
+    padding: 15px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#taskList li button {
+    margin-left: 5px;
+    padding: 8px;
+    background-color: #d9534f;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#taskList li button:hover {
+    background-color: #c9302c;
+}
+
+.container {
+    display: flex;
+    flex: 1;
+}
+.completed-task {
+    text-decoration: line-through;
+    color: gray;
+}
+
+/* Clock, Date Circle, and Image Box Styling */
+#clock, #date-circle, .image-box {
+    margin: 20px auto;
+    text-align: center;
+    font-family: "Cinzel", serif;
+}
+
+#date-circle {
+    width: 150px;
+    height: 150px;
+    background-color: #f5f5f5;
+    border-radius: 50%;
+    font-size: 60px;
+    line-height: 150px;
+    margin: auto;
+}
+
+.image-box {
+    position: relative;
+    width: 150px;
+    height: 150px;
+}
+
+.image-box img {
+    width: 100%;
+}
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    border-radius: 8px;
+    text-align: center;
+}
+.popup-buttons button {
+    margin: 5px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+#yesButton {
+    background-color: #4caf50;
+    color: white;
+}
+#noButton {
+    background-color: #f44336;
+    color: white;
+}
+.slideshow-box {
+      width: 320px;
+      height: 150px;
+      overflow: hidden;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    .slides {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      transition: transform 1s ease-in-out;
+    }
+
+    .slide {
+      min-width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+
+
+  /* Media Queries for Responsive Design */
+  @media (max-width: 1200px) {
+      .intro h1 {
+          font-size: 50px;
+      }
+      
+      .button {
+          font-size: 16px;
+          height: 50px;
+      }
+      
+      #date-circle {
+          font-size: 90px;
+          line-height: 140px;
+      }
+      #page {
+          flex-direction: column;
+          align-items: center;
+          margin: 10px;
+          margin-top: 30px;
+      }
+  }
+  
+  @media (max-width: 768px) {
+      
+      
+      .intro h1 {
+          font-size: 35px;
+          
+      }
+      nav img {
+        width: 90px;
+      }
+      
+      #date-circle {
+          width: 120px;
+          height: 120px;
+          font-size: 70px;
+          line-height: 120px;
+      }
+      
+      .button {
+          width: 100%;
+      }
+      
+      #clock {
+          font-size: 30px;
+          width: 90%;
+      }
+  }
+  
+  @media (max-width: 480px) {
+      
+      
+      .button {
+          font-size: 12px;
+          height: 45px;
+      }
+      
+      #date-circle {
+          font-size: 50px;
+          width: 120px;
+          height: 120px;
+          line-height: 100px;
+      }
+      
+      .box {
+          padding: 10px;
+          width: 100%;
+      }
+      
+      #clock {
+          font-size: 24px;
+      }
+      #quote, #author {
+        font-size: 13px;
+      }
+  }

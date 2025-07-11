@@ -1,0 +1,778 @@
+* {
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    background-color: #000000;
+    color: #fff;
+}
+h1 {
+    font-family: "Doto", sans-serif;
+    font-weight: 500;
+}
+nav img {
+    width: 130px;
+}
+#content {
+    margin-top: 10px;
+}
+.intro h1 {
+    font-size: 60px;
+    color: #fff;
+    font-weight: 300;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    opacity: 0;
+    transform: translateY(50px);
+}
+#quote{
+    font-size: 15px;
+    font-style: italic;
+}
+#author {
+    margin-top: -10px;
+}
+
+ /* Container for the grid */
+ #buttons{
+   margin-top: 50px;
+}
+
+#buttons button {
+    color: white;
+    border-color: transparent;
+    border-radius: 30px;
+    padding: 20px;
+    text-align: center;
+    transition: 0.25s;
+    font-size: 20px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.box h3 {
+    font-size: 25px;
+    font-weight: 4000;
+    margin-top: 12px;
+}
+#buttons button:hover {
+    transform: scale(1.1);
+}
+
+/* Top row with different widths and heights */
+.box1 {
+    width: 60%;
+    height: 90px; /* Height of Box 1 */
+    background-color: #a59dd6;
+}
+
+.box2 {
+    width: 30%;
+    height: 90px; /* Height of Box 2 */
+    background-color: #b1a071;
+}
+
+.box3 {
+    margin-top: 10px;
+    width: 30%;
+    height: 90px; /* Height of Box 3 */
+    background-color: #34363b;
+}
+
+.box4 {
+    margin-top: 10px;
+    width: 60%;
+    height: 90px; /* Height of Box 4 */
+    background-color: #9c41a4;
+}
+#calendar {
+    background-color: hsl(219, 100%, 52%);
+    border-radius: 30px;
+    margin: 30px;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 1s ease, transform 1s ease;
+}
+.date-box {
+    background-color: rgb(255, 255, 255);
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    height: 200px; /* Adjust height as needed */
+    width: 250px; /* Adjust width as needed */
+    margin: 30px;
+}
+
+.date-number {
+    font-size: 70px; /* Big number */
+    font-weight: bold;
+    color: #000000;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.date-month-year {
+    font-size: 15px; /* Month and Year */
+    margin: 5px 0;
+    color: #000000;
+}
+
+.current-time {
+    font-size: 18px; /* Time */
+    color: #000000;
+}
+
+.duration-box {
+    font-size: 13px; /* Duration */
+    border-radius: 10px;
+    padding: 10px;
+    color: #ffffff;
+    background-color: #34363b;
+}
+
+.reminder-box {
+    background-color: #474747;
+    border-radius: 5px;
+    padding: 10px 50px;
+    margin-top: 20px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+}
+#wrapper {
+    display: flex;
+    justify-content: space-between;
+		margin: 30px;
+}
+.icon {
+    width: 50px;
+}
+textarea {
+    width: 100%;
+    height: 65vh;
+    font-family: "Poppins", sans-serif;
+    font-size: 25px;
+    background-color: #121212;
+    color: #fff;
+    border-radius: 20px;
+    transition: 0.25s;
+    opacity: 0; /* Start hidden */
+    transform: translateY(30px); /* Start 30px below */
+    animation: slideUp 1s ease-out forwards; /* Apply the slideUp animation */
+
+}
+@keyframes slideUp {
+    to {
+        opacity: 1; /* Fade in */
+        transform: translateY(0); /* Slide to the original position */
+    }
+}
+.tdlcontainer {
+    display: flex;
+    justify-content: space-around;
+    gap: 30px;
+    font-family: "Playfair Display", serif;
+    margin: 70px;
+}
+
+/* Form styling */
+.task-form {
+    flex: 1;
+    background-color: #1c1c1e;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transform: scale(0.5);
+    animation: scaleUp 1s forwards; /* Scale-up effect */
+}
+
+.task-form h2 {
+    margin-bottom: 15px;
+    font-size: 1.5em;
+}
+
+.task-form input, .task-form button {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 1em;
+    margin-top: 10px;
+    background-color: #2c2c2e;
+    border-color: transparent;
+    color: #fff;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 1s forwards;
+}
+.task-form input:nth-of-type(1) {
+    animation-delay: 0.5s; /* Task Name input appears first */
+}
+
+.task-form input:nth-of-type(2) {
+    animation-delay: 1s; /* Date input appears second */
+}
+.task-form button {
+    background-color: #098bff;
+    color: #ffffff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    animation-delay: 1.5s; /* Add Task button appears last */
+}
+
+.task-form button:hover {
+    background-color: #0368ce;
+}
+
+/* Task list styling */
+.task-list {
+    flex: 2;
+    background-color: #1c1c1e;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    animation: fadeInList 1s forwards;
+    animation-delay: 2s; /* Delay list fade-in */
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.task-list h2 {
+    margin-bottom: 15px;
+    font-family: "Playfair Display", serif;
+    font-size: 1.5em;
+}
+
+#taskList {
+    list-style-type: none;
+}
+/* Scale-up animation */
+@keyframes scaleUp {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Fade-in animation for inputs and button */
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Fade-in animation for task list */
+@keyframes fadeInList {
+    to {
+        opacity: 1;
+    }
+}
+
+#taskList li {
+    background-color: #2c2c2e;
+    padding: 15px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#taskList li button {
+    margin-left: 5px;
+    padding: 8px;
+    background-color: #d9534f;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#taskList li button:hover {
+    background-color: #c9302c;
+}
+
+.container {
+    display: flex;
+    flex: 1;
+}
+.completed-task {
+    text-decoration: line-through;
+    color: gray;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #25D366;
+    color: white;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #ccc;
+    transition: transform 0.3s ease;
+}
+
+.contact {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.contact img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.chat-window {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.messages {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+.message {
+    padding: 10px;
+    border-radius: 5px;
+    margin: 5px 0;
+}
+
+.sent {
+    background-color: #dcf8c6;
+    align-self: flex-end;
+}
+
+.received {
+    background-color: #fff;
+}
+
+.input-field {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    transition: 1s;
+}
+
+.toggle-btn {
+    display: none;
+}
+#emotions-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 1s;
+}
+
+.emotion-img {
+    width: 14%;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.emotion-img:hover {
+    transform: scale(1.2);
+}
+#input-area {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row; /* Default layout: emoji on left, textarea on right */
+    gap: 10px;
+    width: 80%;
+    margin-top: 20px;
+    border-radius: 30px;
+    background-color: #121212;
+  }
+  #input-container {
+    display: flex;
+    align-items: center;
+    margin: 30px;
+    gap: 25px; /* Space between emoji and textarea */
+    width: 90%;
+    margin-bottom: 10px;
+    border-radius: 30px;
+    
+  }
+  #emoji-display {
+    flex-shrink: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+  #emoji-display img {
+    width: 90%;
+    object-fit: contain;
+  }
+  
+  #thought-box {
+    flex: 1;
+    min-height: 90px;
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 10px;
+    font-size: 16px;
+    border-color: transparent;
+    border-radius: 30px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    resize: auto;
+    background-color: #242424;
+    margin-top: 30px;
+  }
+  
+  /* Send Button Styling */
+  #send-btn {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #ff0000;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    align-self: flex-start; /* Align button to the top */
+    margin: 30px;
+  }
+  
+  #send-btn:hover {
+    background-color: #b60404;
+  }
+
+#selected-box {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+
+/* Animations */
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+#buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+#emotions-container, #input-area {
+    transition: opacity 1s;
+}
+
+#results-container {
+    display: none;
+}
+
+.fadeOut {
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.fadeIn {
+    opacity: 1;
+    transition: opacity 1s;
+}
+#heading {
+    text-align: center;
+}
+#show-results-btn {
+    margin: 100px;
+    padding: 10px 40px;
+    font-size: 15px;
+    border-radius: 30px;
+    border-color: transparent;
+    background-color: #121212;
+    color: #eee;
+    font-family: "Playfair Display", serif;
+}
+
+#emotions-container, #input-area, #show-results-btn {
+    transition: opacity 1s;
+}
+
+#results-container {
+    display: none;
+}
+
+.fadeOut {
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.fadeIn {
+    opacity: 1;
+    transition: opacity 1s;
+}
+
+#thoughts-box {
+    margin-top: 20px;
+}
+
+.thoughts-section {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+}
+
+#emotions-container, #input-area, #show-results-btn {
+    transition: opacity 1s;
+}
+
+#results-container {
+    display: none;
+}
+#results-container h2 {
+    font-family: "Playfair Display", serif;
+}
+#thoughts-box {
+    margin-top: 20px;
+}
+
+/* General Results Styling */
+.results-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 20px 0;
+    padding: 10px;
+  }
+  
+  /* Individual Result Item */
+  .result-item {
+    display: flex;
+    width: 95%;
+    align-items: flex-start;
+    gap: 15px;
+    border-color: transparent;
+    border-radius: 20px;
+    padding: 15px;
+    background-color: #121212;
+    overflow: hidden;
+    resize: vertical; /* Allow resizing vertically */
+    text-align: left;
+    margin-bottom: 30px;
+  }
+  
+  /* Emoji/Icon Styling */
+  .emotion-icon img {
+    width: 60%;
+    margin-left: 30px;
+  }
+  
+  /* Thought Text Styling */
+  .thought-text {
+    flex: 1;
+    font-size: 16px;
+    word-wrap: break-word; /* Break long words to prevent overflow */
+    overflow-wrap: break-word;
+    max-height: 300px;
+    overflow-y: auto; /* Add scroll for very long texts */
+    padding-right: 10px;
+  }
+
+#emotions-container {
+    display: flex;
+    opacity: 1; /* Ensure it's visible */
+}
+#emotions-container, #results-container {
+    display: none;
+}
+
+#results-container {
+    display: none; /* Initially hidden */
+}
+
+#emotions-container {
+    display: flex;
+    opacity: 1; /* Ensure it's visible */
+}
+
+.fadeIn {
+    animation: fadeIn 1s;
+}
+
+.fadeOut {
+    animation: fadeOut 1s;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Slide-up animation */
+.slide-up {
+    animation: slideUp 1s forwards;
+  }
+  
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Fade-in and Slide-up for buttons */
+  .fade-in {
+    animation: fadeIn 1s forwards;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Slide-up for calendar with no delay */
+  .calendar-slide-up {
+    animation: slideUp 1s forwards;
+  }
+  
+@media (max-width: 768px) {
+    .sidebar {
+        display: none;
+        transform: translateX(-100%);
+    }
+    
+    .sidebar.active {
+        display: flex;
+        transform: translateX(0);
+    }
+
+    .toggle-btn {
+        display: block;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+    }
+    #wrapper {
+		margin: 0px;
+	}
+}
+/* Responsive Design for Smaller Screens */
+@media screen and (max-width: 500px) {
+    #emotions-container {
+        flex-direction: column;
+    }
+    .emotion-img {
+        width: 40%;
+        
+    }
+    nav img {
+        width: 90px;
+    }
+    #heading {
+        font-size: 30px;
+        margin: 30px 0;
+    }
+    #input-container {
+        flex-direction: column;
+        margin: 0px;
+    }
+    #input-area {
+        width: 100%;
+      }
+    #emoji-display img {
+        margin: 30px;
+    }
+    #thought-box {
+        min-height: 300px;
+        max-height: 500px;
+    
+    }
+    .emotion-icon img {
+        width: 15%;
+        margin-left: 5px;
+    }
+    .result-item {
+        width: 100%;
+    }
+    .thought-text {
+        margin-left: -130px;
+    }
+    #show-results-btn {
+        margin: 50px;
+    }
+  }

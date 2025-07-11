@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Doto:wght@100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/chat.css">
+  <title>JA | Twelve</title>
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typo-js@1.0.0/typo.js"></script>
+
+
+</head>
+
+<script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyA5w-HTh1kbuOywI1M4bviLWskbro3egNw",
+      authDomain: "ja-chat-c0d8b.firebaseapp.com",
+      databaseURL: "https://ja-chat-c0d8b-default-rtdb.firebaseio.com",
+      projectId: "ja-chat-c0d8b",
+      storageBucket: "ja-chat-c0d8b.appspot.com",
+      messagingSenderId: "79690163887",
+      appId: "1:79690163887:web:04960546a911e0286b565a",
+      measurementId: "G-0JT6YDEXW9"
+    };
+  
+    firebase.initializeApp(firebaseConfig);
+  
+    const presenceRef = firebase.database().ref("presence");
+  
+    function setOnlineStatus() {
+      presenceRef.child("user1").set("online");
+    }
+  
+    function setOfflineStatus() {
+      const options = { hour: '2-digit', minute: '2-digit', hour12: true };
+      const lastSeen = new Date().toLocaleTimeString([], options);
+      presenceRef.child("user1").set("last seen at "  + lastSeen);
+    }
+  
+    setOnlineStatus();
+  
+    document.addEventListener("visibilitychange", function () {
+      if (document.visibilityState === "hidden") {
+        setOfflineStatus();
+      } else {
+        setOnlineStatus();
+      }
+    });
+  
+    presenceRef.child("user2").on("value", function (snapshot) {
+      const presence = snapshot.val();
+      
+      // Update the first instance of the status for User 2
+      const statusElement1 = document.getElementById("statusUser2_1");
+      if (presence === "online") {
+        statusElement1.innerText = "online";
+      } else {
+        statusElement1.innerText = presence;
+      }
+  
+      // Update the second instance of the status for User 2
+      const statusElement2 = document.getElementById("statusUser2_2");
+      if (presence === "online") {
+        statusElement2.innerText = "online";
+      } else {
+        statusElement2.innerText = presence;
+      }
+    });
+</script>
+<script src="../js/app.js"></script>
+<body>
+    
+    
+    <div id="main-content"></div>
+    <div class="container">
+        <div class="sidebar" id="sidebar">
+          <a href="index.html">
+            <nav>
+              <img src="../images/logo.png" alt="JA | TWELVE" id="logo" class="logo animated">
+            </nav>
+          </a>
+
+          <h2 class="chats">Chats</h2>
+          <ul id="contact-list">
+            <li class="contact-item" id="contact-1">
+              <img src="../images/pfp/jai.png" alt="Profile Pic" class="profile-pic">
+              <span class="display-name">Jaita</span>
+            </li>
+            <li class="contact-item" id="contact-3">
+              <img src="../images/pfp/group.png" alt="Profile Pic" class="profile-pic">
+              <span>Twelve</span>
+            </li>
+            <div class="sidebar-buttons">
+              <button id="clearChatsBtn" onclick="module.clearChats()">🗑</button>
+              <a href="../upload/index.html" target="_blank">
+                <button class="sendmedia">Send Media</button>
+              </a>
+            </div>
+          </ul>
+        </div>
+    
+        <div class="chat-area">
+          <div class="chat-header" id="chatHeader">
+            <div class="header-info">
+              <img src="../images/pfp/jai.png" alt="Profile Pic" class="profile-pic-small" id="profilePicSmall">
+              <div class="name-and-status">
+                <span class="nameuser" contenteditable="true" onclick="editName()" onblur="saveName()" id="userName">Jaita</span>
+                <p id="statusUser2_1" class="onlinestatus">
+                  <img src="https://media2.giphy.com/media/55aZPPaqOvsUoxkapE/giphy.gif?cid=6c09b952y322aoz08798hgpl972hhqlcd67f4f5w2ksu8pxv&ep=v1_internal_gif_by_id&rid=giphy.gif&ct=s" style="width: 20px; height: 20px;">
+                </p>
+              </div>
+            </div>
+            <button class="toggle-button" onclick="toggleSidebar()">☰</button>
+          </div>
+    
+          <div id="chat-window">
+            <div id="loadingIndicator" style="display: none;">
+                <img src="https://media2.giphy.com/media/55aZPPaqOvsUoxkapE/giphy.gif?cid=6c09b952y322aoz08798hgpl972hhqlcd67f4f5w2ksu8pxv&ep=v1_internal_gif_by_id&rid=giphy.gif&ct=s" alt="Loading..." class="loadinginchat"/>
+            </div>
+            <div id="messages"></div>
+        </div>
+        
+          <div class="input-area" id="inputArea">
+            <textarea id="msgTxt" autocorrect="on" spellcheck="true" autocomplete="on"  placeholder="Type a message..."></textarea>
+            <input type="submit" id="msgBtn" value="send" onclick="module.sendMsg()" class="sendbutton">
+          </div>
+        </div>
+      </div>
+    
+    
+    
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <p>Are you sure you want to delete this message?</p>
+            <button id="confirmDelete" class="btn-confirm">Delete</button>
+            <button id="cancelDelete" class="btn-cancel">Cancel</button>
+        </div>
+    </div>
+
+    <div id="overlay"></div>
+    <div id="blockpop" style="display: none;">
+        <img src="../images/LOGO-Light.png" alt="twelve">
+        <h2>Access Restricted</h2>
+        <p>You've reached your limit of talking. It's time for you to sleep!</p>
+        <audio id="block-audio" src="../block.mp3" preload="auto"></audio>
+    </div>
+    
+    
+    
+    <audio id="sendAudio" src="../send.mp3" preload="auto"></audio>
+    <audio id="receiveAudio" src="../receive.mp3" preload="auto"></audio>
+    <script>
+        module = {};
+    </script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+        import { getDatabase, ref, set, push, remove, onChildAdded, onChildRemoved } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyA5w-HTh1kbuOywI1M4bviLWskbro3egNw",
+            authDomain: "ja-chat-c0d8b.firebaseapp.com",
+            databaseURL: "https://ja-chat-c0d8b-default-rtdb.firebaseio.com",
+            projectId: "ja-chat-c0d8b",
+            storageBucket: "ja-chat-c0d8b.appspot.com",
+            messagingSenderId: "79690163887",
+            appId: "1:79690163887:web:04960546a911e0286b565a",
+            measurementId: "G-0JT6YDEXW9"
+        };
+
+   // Initialize Firebase app and database
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+// Variables
+var msgTxt = document.getElementById('msgTxt');
+var messages = document.getElementById('messages');
+var sender = "aru"; 
+var loadingIndicator = document.getElementById('loadingIndicator'); // Loading indicator element
+const blockStatusRef = ref(db, "block_status");
+
+// Get current user and other user
+const currentUser = "user1"; // Change as per logged-in user
+const otherUser = "user2"; // Change dynamically based on the other participant
+
+// Audio elements
+var sendAudio = document.getElementById('sendAudio');
+var receiveAudio = document.getElementById('receiveAudio');
+
+// Initially hide the loading GIF
+loadingIndicator.style.display = 'none';
+
+// Auto-resizing functionality for the textarea
+msgTxt.addEventListener('input', function() {
+    msgTxt.style.height = 'auto';
+    msgTxt.style.height = (msgTxt.scrollHeight) + 'px';
+});
+
+// Send message on Enter key press
+msgTxt.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        module.sendMsg();
+    }
+});
+module.sendMsg = function sendMsg() {
+    console.log("Sending message...");
+
+    var msg = msgTxt.value.trim();
+    if (msg) {
+        // Replace all newlines with <br/> for line breaks
+        msg = msg.replace(/\n/g, '<br/>');
+
+        // Replace all semicolons with <br/>
+        msg = msg.replace(/;/g, '<br/>');
+
+        // Replace text enclosed in * with <b> tags
+        msg = msg.replace(/\*(.*?)\*/g, '<b>$1</b>');
+
+        // Replace text enclosed in ^ with <h1> tags
+        msg = msg.replace(/\^(.*?)\^/g, '<h1>$1</h1>');
+
+        const newMessageRef = push(ref(db, "messages"));
+        set(newMessageRef, {
+            msg: msg,
+            sender: sender
+        }).then(() => {
+            console.log("Message sent successfully");
+            msgTxt.value = ""; 
+            msgTxt.style.height = 'auto'; 
+            messages.scrollTop = messages.scrollHeight; 
+
+            // Play send sound
+            sendAudio.currentTime = 0;
+            sendAudio.play(); 
+        }).catch(error => {
+            console.error("Error sending message:", error);
+        });
+    } else {
+        console.warn("Message is empty. Cannot send.");
+    }
+};
+
+
+// Function to receive messages and display them in the chat
+onChildAdded(ref(db, "messages"), (data) => {
+    // Show the loading GIF when data is being fetched
+    if (loadingIndicator.style.display === 'none') {
+        loadingIndicator.style.display = 'block';
+    }
+
+    const msgData = data.val();
+    let newMessage;
+
+    // Regular expression to find URLs in the message
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    let messageContent = msgData.msg.replace(urlRegex, (url) => {
+        if (url.includes('firebasestorage.googleapis.com')) {
+            return `<a href="${url}" target="_blank" class="media-link">MEDIA FILE</a>`;
+        } else {
+            const urlObject = new URL(url);
+            const domainName = urlObject.hostname.replace('www.', '');
+            return `<a href="${url}" target="_blank" class="site-link">${domainName}</a>`;
+        }
+    });
+
+    // Format the message content for display
+    if (msgData.sender === sender) {
+        newMessage = `
+            <div style="justify-content:end" class="outer" id="${data.key}">
+                <div id="inner" class="me">
+                    ${messageContent}
+                    <button id="dltMsg" onclick="module.dltMsg('${data.key}')">x</button>
+                </div>
+            </div>`;
+    } else {
+        newMessage = `
+            <div class="outer" id="${data.key}">
+                <div id="inner" class="notMe">
+                    ${messageContent}
+                </div>
+            </div>`;
+
+        // Play receive sound when a new message arrives
+        receiveAudio.currentTime = 0;
+        receiveAudio.play();
+    }
+
+    // Insert the new message into the message container
+    messages.insertAdjacentHTML('beforeend', newMessage);
+
+    // Scroll to the bottom of the messages container
+    messages.scrollTop = messages.scrollHeight;
+
+    // Hide the loading indicator once the messages are displayed
+    loadingIndicator.style.display = 'none';
+});
+
+// Function to open the modal and handle message deletion
+module.dltMsg = function dltMsg(key) {
+    const deleteModal = document.getElementById('deleteModal');
+    deleteModal.style.display = 'block';
+
+    // Play the open sound
+    const openAudio = new Audio('../open.mp3');
+    openAudio.play();
+
+    const confirmDeleteBtn = document.getElementById('confirmDelete');
+    const cancelDeleteBtn = document.getElementById('cancelDelete');
+
+    confirmDeleteBtn.onclick = function() {
+        remove(ref(db, "messages/" + key))
+            .then(() => {
+                console.log("Message deleted successfully.");
+            })
+            .catch(error => {
+                console.error("Error deleting message:", error);
+            });
+
+        // Play the click sound
+        const clickAudio = new Audio('../click.mp3');
+        clickAudio.play();
+
+        deleteModal.style.display = 'none';
+    };
+
+    cancelDeleteBtn.onclick = function() {
+        deleteModal.style.display = 'none';
+
+        // Play the close sound
+        const closeAudio = new Audio('../close.mp3');
+        closeAudio.play();
+    };
+
+    window.onclick = function(event) {
+        if (event.target == deleteModal) {
+            deleteModal.style.display = 'none';
+
+            // Play the close sound
+            const closeAudio = new Audio('../close.mp3');
+            closeAudio.play();
+        }
+    };
+};
+
+// When a message is deleted, remove it from the chat display
+onChildRemoved(ref(db, "messages"), (data) => {
+    const msgBox = document.getElementById(data.key);
+    if (msgBox) {
+        msgBox.remove(); 
+    }
+});
+
+// Function to clear all chats
+module.clearChats = function clearChats() {
+    if (confirm("Are you sure you want to clear all chats? This action cannot be undone.")) {
+        remove(ref(db, "messages"))
+            .then(() => {
+                console.log("All chats cleared successfully.");
+                messages.innerHTML = "";
+                
+                sendAudio.currentTime = 0;
+                sendAudio.play(); 
+            })
+            .catch(error => {
+                console.error("Error clearing chats:", error);
+            });
+    }
+};
+
+// Display loading GIF while waiting for Firebase data to load
+loadingIndicator.style.display = 'block';
+
+// Once Firebase data is loaded (first message), hide the loading GIF
+onChildAdded(ref(db, "messages"), (data) => {
+    if (loadingIndicator.style.display === 'block') {
+        loadingIndicator.style.display = 'none'; // Hide the loading GIF when messages are loaded
+    }
+});
+
+
+    </script>
+
+<script>
+    function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const isActive = sidebar.classList.contains('active');
+
+    // Toggle the sidebar's active state
+    sidebar.classList.toggle('active');
+
+    if (!isActive) {
+        // Play open.mp3 when the sidebar is opened
+        const openAudio = new Audio('../open.mp3');
+        openAudio.play();
+
+        // Add the outside click listener
+        document.addEventListener('click', closeSidebarOnClickOutside);
+    } else {
+        // Play close.mp3 when the sidebar is closed
+        const closeAudio = new Audio('../close.mp3');
+        closeAudio.play();
+
+        // Remove the outside click listener
+        document.removeEventListener('click', closeSidebarOnClickOutside);
+    }
+}
+
+function closeSidebarOnClickOutside(event) {
+    const sidebar = document.getElementById('sidebar');
+    const toggleButton = document.querySelector('.toggle-button'); // Select the toggle button
+
+    // Check if the sidebar is active, and the click is outside the sidebar and the toggle button
+    if (sidebar.classList.contains('active') && !sidebar.contains(event.target) && event.target !== toggleButton) {
+        sidebar.classList.remove('active'); // Close the sidebar
+
+        // Play close.mp3 when the sidebar is closed
+        const closeAudio = new Audio('../close.mp3');
+        closeAudio.play();
+
+        // Remove the event listener to prevent multiple bindings
+        document.removeEventListener('click', closeSidebarOnClickOutside);
+    }
+}
+
+</script>
+    <script>
+        function searchGoogle(event) {
+            event.preventDefault(); // Prevent form submission
+            const query = document.getElementById("searchQuery").value;
+            if (query) {
+                const url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+                window.open(url, "_blank"); // Open search in a new tab
+            }
+        }
+    </script>
+    <script>
+        // Load saved name from local storage when the page loads
+        document.addEventListener("DOMContentLoaded", function() {
+            const savedName = localStorage.getItem("nameuser");
+            if (savedName) {
+                document.querySelector(".nameuser").textContent = savedName;
+                document.querySelector(".display-name").textContent = savedName; // Update the display name
+            }
+        });
+    
+        // Function to edit the name
+        function editName() {
+            const nameUser = document.querySelector(".nameuser");
+            nameUser.setAttribute("contenteditable", "true");
+        }
+    
+        // Save the edited name to local storage and update the display name
+        function saveName() {
+            const nameUser = document.querySelector(".nameuser");
+            const displayName = document.querySelector(".display-name");
+            
+            nameUser.setAttribute("contenteditable", "false");
+            const newName = nameUser.textContent;
+            localStorage.setItem("nameuser", newName);
+    
+            // Update the display name in the <li>
+            displayName.textContent = newName;
+        }
+    </script>
+    <script>
+        // Capture text copied from the website
+    document.addEventListener('copy', function (e) {
+    // Get the copied content
+    var copiedText = window.getSelection().toString();
+    
+    if (copiedText) {
+        var msgTxt = document.getElementById('msgTxt');
+        
+        // Get the current text in the textarea
+        var currentText = msgTxt.value;
+        
+        // Wrap the copied text in <reply> tags with <br> and add two empty lines
+            var formattedText = `<reply>${copiedText}</reply>\n\n`;
+
+        // Append the formatted text to the current text
+        msgTxt.value = currentText + formattedText;
+
+        // Move the cursor to the position after the two empty lines
+        msgTxt.selectionStart = msgTxt.selectionEnd = msgTxt.value.length;
+
+        // Focus on the textarea to allow typing
+        msgTxt.focus();
+    }
+});
+
+// Automatically focus the textarea when the user starts typing or inputting text
+document.getElementById('msgTxt').addEventListener('focus', function() {
+    var msgTxt = document.getElementById('msgTxt');
+    msgTxt.selectionStart = msgTxt.selectionEnd = msgTxt.value.length;
+});
+
+// Ensure the textarea resizes and behaves correctly
+document.getElementById('msgTxt').addEventListener('input', function () {
+    var msgTxt = document.getElementById('msgTxt');
+    
+    // Automatically move the cursor to the end after typing
+    msgTxt.selectionStart = msgTxt.selectionEnd = msgTxt.value.length;
+
+    // Focus on the textarea if it's not already focused
+    msgTxt.focus();
+});
+
+// A simple send message function
+const module = {
+    sendMsg: function () {
+        var msgTxt = document.getElementById('msgTxt');
+        var message = msgTxt.value.trim();
+
+        if (message) {
+            // You can implement the logic for sending the message here
+            console.log('Message sent:', message);
+        }
+    }
+};
+
+    </script>
+    <script src="../js/block.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const input = document.querySelector('input');
+            if (input) {
+                input.setAttribute('autocorrect', 'on');
+                input.setAttribute('spellcheck', 'true');
+                input.setAttribute('autocomplete', 'on');
+            }
+        });
+    </script>
+<script src="../js/asdfghj.js"></script>
+
+
+
+</body>
+</html>

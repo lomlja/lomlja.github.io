@@ -1,0 +1,91 @@
+* {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: 20px;
+}
+
+.inp {
+  display: none;
+}
+
+.progressBar {
+  width: 280px;
+  background: rgb(196, 193, 193);
+  padding: 10px 10px;
+  position: relative;
+  border-radius: 20px;
+}
+
+.progress {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(75deg, rgb(255, 0, 76), rgb(5, 108, 156));
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.img {
+  height: 250px;
+  width: 300px;
+  border: 3px solid crimson;
+  -o-object-fit: contain;
+     object-fit: contain;
+  display: none;
+  border-radius: 30px;
+}
+
+.selectImage {
+  background: rgba(157, 221, 7, 0.801);
+  color: white;
+  padding: 15px 20px;
+  border-radius: 80px;
+}
+
+.upload {
+  background: #1f7aed;
+  color: white;
+  padding: 15px 20px;
+  border-radius: 10px;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  margin: 10px 0;
+}
+
+.filedata {
+  background: #121212;
+  color: #fff;
+  padding: 10px 15px;
+  font-size: 14px;
+  max-width: 200px;
+  text-overflow: ellipsis;
+  border-radius: 10px;
+  display: none;
+  overflow: hidden;
+  margin: 10px;
+}
+
+.imageUpload {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.loading {
+  display: none;
+}/*# sourceMappingURL=index.css.map */
