@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Doto:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <script src="js/OoMUKHRIwBUlBa.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+  <title>JA | Twelve</title>
+</head>
+<script>
+    const firebaseConfig = {
+  apiKey: "AIzaSyA5w-HTh1kbuOywI1M4bviLWskbro3egNw",
+  authDomain: "ja-chat-c0d8b.firebaseapp.com",
+  databaseURL: "https://ja-chat-c0d8b-default-rtdb.firebaseio.com",
+  projectId: "ja-chat-c0d8b",
+  storageBucket: "ja-chat-c0d8b.appspot.com",
+  messagingSenderId: "79690163887",
+  appId: "1:79690163887:web:04960546a911e0286b565a",
+  measurementId: "G-0JT6YDEXW9"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const presenceRef = firebase.database().ref("presence");
+let startTime = performance.now();
+
+function setOnlineStatus() {
+  presenceRef.child("inspected").set("online");
+}
+
+function setOfflineStatus() {
+  const options = { hour: '2-digit', minute: '2-digit', hour12: true };
+  const lastSeen = new Date().toLocaleTimeString([], options);
+
+  // Calculate time spent
+  const endTime = performance.now();
+  const timeSpentMs = endTime - startTime;
+  const timeSpentSec = Math.floor(timeSpentMs / 1000);
+
+  presenceRef.child("inspected").set({
+    status: "came at " + lastSeen,
+    timeSpent: timeSpentSec + " seconds"
+  });
+}
+
+setOnlineStatus();
+
+document.addEventListener("visibilitychange", function () {
+  if (document.visibilityState === "hidden") {
+    setOfflineStatus();
+  } else {
+    startTime = performance.now();
+    setOnlineStatus();
+  }
+});
+
+</script>
+<body>
+    <style>
+         body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #000000;
+            overflow: hidden;
+            font-family: "Doto", sans-serif;
+        }
+
+        /* Initial logo position and animation */
+        .logo {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: top 1s ease, transform 1s ease;
+        }
+
+        /* Logo's top position after transition */
+        .logo.top-center {
+            top: 10%;
+            transform: translateY(0);
+        }
+
+        /* Form container styling */
+        .form-container {
+            opacity: 0;
+            transition: opacity 1s ease;
+            background: #121212;
+            padding: 1.5em;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            transform: scale(2)
+        }
+
+        /* Make form visible */
+        .form-container.visible {
+            opacity: 1;
+        }
+
+        /* Heading style */
+        .form-container h2 {
+            font-size: 1.2em;
+            color: #ff0000;
+            margin-bottom: 1em;
+        }
+
+        /* Input styling */
+        .form-container input[type="password"] {
+            width: 100%;
+            padding: 0.8em;
+            margin-bottom: 1em;
+            color: #fff;
+            border-color: transparent ;
+            border-radius: 8px;
+            font-size: 1em;
+            outline: none;
+            transition: border 0.3s ease;
+            box-sizing: border-box;
+            background-color: #2c2c2e;
+        }
+
+        /* Input focus effect */
+        .form-container input[type="password"]:focus {
+            border-color: #ff2c2c;
+            box-shadow: 0 0 5px rgba(194, 0, 0, 0.527);
+        }
+
+        /* Button styling */
+        .form-container button {
+            width: 100%;
+            padding: 0.8em;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        /* Button hover effect */
+        .form-container button:hover {
+            background-color: #920101;
+        }
+
+        /* Logo image styling */
+        .logo img {
+            width: 130px;
+            height: auto;
+        }
+        p {
+            font-family: "Playfair Display", serif;
+            color: #fff;
+        }
+
+        /* Responsive styling */
+        @media (max-width: 600px) {
+            .form-container {
+                padding: 1em;
+                max-width: 256px;
+            }
+
+            .form-container h2 {
+                font-size: 1.2em;
+            }
+
+            .form-container input[type="password"], .form-container button {
+                font-size: 0.9em;
+                padding: 0.7em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="logo" id="logo">
+        <img src="images/LOGO-Light.png" alt="Logo" style="filter: brightness(150%);"> <!-- Replace with your logo image path -->
+    </div>
+
+    <!-- Form container -->
+    <div class="form-container" id="formContainer">
+        <h2>Caught you using the inspect elements!</h2>
+        <p>Please try to respect the efforts done on the website. Go sleep now and read the messages tomorrow</p>
+    </div>
+
+
+        <script src="../js/asdfghj.js"></script>
+</body>
+</html>
